@@ -18,7 +18,7 @@ function help() {
 converter=''
 ffmpeg -version >/dev/null 2>&1 && { converter='ffmpeg'; }
 avconv -version >/dev/null 2>&1 && { converter='avconv'; }
-if [ -z "$converter"]; then
+if [ -z "$converter" ]; then
   echo 'Please install ffmpeg or avconv.'
   exit 1
 fi

@@ -1,7 +1,7 @@
 SLITCAMERA
 
 Script to turn video into slit photo.
-Requirements: ffmpeg and imagemagick.
+Requirements: ffmpeg or avconv and imagemagick.
 
 Usage:
 
