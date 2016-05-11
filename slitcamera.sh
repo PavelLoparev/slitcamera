@@ -21,7 +21,7 @@ avconv -version >/dev/null 2>&1 && { converter='avconv'; }
 if [ -z "$converter"]; then
   echo 'Please install ffmpeg or avconv.'
   exit 1
-fi 
+fi
 
 # Init variables.
 framesFolder="frames"
