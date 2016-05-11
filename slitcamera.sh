@@ -3,7 +3,7 @@
 # Help.
 function help() {
   echo -e "SLITCAMERA\n"
-  echo -e "Script to turn video into slit photo.\nRequirements: ffmpeg and imagemagick.\n"
+  echo -e "Script to turn video into slit photo.\nRequirements: ffmpeg or avconv and imagemagick.\n"
   echo -e "Usage:\n"
   echo -e "\t-i, --input\n\t\tInput video file name.\n\t\tRequired parameter.\n"
   echo -e "\t-o, --output\n\t\tOutput video file name.\n\t\tOptional parameter.\n\t\tDefault value: \"slit-photo.png\".\n"
@@ -13,6 +13,15 @@ function help() {
   echo -e "\t./slitcamera.sh --input=test.avi --output=test.png --slit-shift=100\n"
   echo "Developed by Loparev Pavel 2016"
 }
+
+# Determine installed video converter
+converter=''
+ffmpeg -version >/dev/null 2>&1 && { converter='ffmpeg'; }
+avconv -version >/dev/null 2>&1 && { converter='avconv'; }
+if [ -z "$converter"]; then
+  echo 'Please install ffmpeg or avconv.'
+  exit 1
+fi 
 
 # Init variables.
 framesFolder="frames"
@@ -57,7 +66,7 @@ if [ -n "$input" ]; then
 
   # Extract frames from video file.
   echo "Getting frames from video..."
-  ffmpeg -i $input $framesFolder/frame-%d.png
+  eval "$converter -i $input $framesFolder/frame-%d.png"
 
   # Init frame variables.
   framesCount=$(ls $framesFolder -1 | wc -l)
